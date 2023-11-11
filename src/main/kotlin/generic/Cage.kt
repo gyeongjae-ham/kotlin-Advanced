@@ -36,6 +36,9 @@ fun main() {
     // Cage<Fish>와 Cage<GoldFish>는 아무런 관계가 아니다 -> 이걸 Cage는 무공변(불공변)하다라고 한다
 
     // 제네릭 타입을 가진 클래스들간의 관계를 만들어 주기
+    // 타입 앞에 out 키워드 작성해 주기
+    fishCage.moveFrom(goldFishCage)
+    val fish: Fish = fishCage.getFirst()
 }
 
 class Cage {
@@ -66,7 +69,21 @@ class Cage2<T> {
         this.animals.add(animal)
     }
 
-    fun moveFrom(cage: Cage2<T>) {
-        this.animals.addAll(cage.animals)
+    fun moveFrom(otherCage: Cage2<out T>) {
+        // out 키워드로 변성을 준 클래스는 get만 가능해진다
+        otherCage.getFirst() // 가능
+        // otherCage.put(Carp("잉어")) 불가능
+        // otherCage는 생산자 역할만 가능하다
+        this.animals.addAll(otherCage.animals)
     }
+
+    // 반대의 경우에는 반공변을 해줘야 한다
+    // 상위 클래스 타입의 제네릭에 하위 클래스 타입 제네릭을 넣어주기 위해서는 상위 클래스 타입의 제네릭이 오히려 하위 계층이 되어야 한다
+    // 따라서 공변의 반대로 해야 하므로 반공변이라 한다
+    fun moveTo(otherCage: Cage2<in T>) {
+        // in 키워드가 붙은 otherCage는 데이터를 받을 수만 있다
+        // otherCage는 소비자 역할만 가능하다
+        otherCage.animals.addAll(this.animals)
+    }
+
 }
