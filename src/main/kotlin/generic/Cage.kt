@@ -29,7 +29,13 @@ fun main() {
     val fishCage = Cage2<Fish>()
 
     // GoldFish가 Fish 클래스 하위 클래스인데도 옮길 수 없다는 에러가 발생
-    fishCage.moveFrom(goldFishCage)
+    // fishCage.moveFrom(goldFishCage)
+
+    // Cage<Fish>에 Cage<GoldFish>를 넣으려고 했기 때문이다!
+    // 상속관계에서 Fish는 GoldFish의 상위 클래스가 맞지만,
+    // Cage<Fish>와 Cage<GoldFish>는 아무런 관계가 아니다 -> 이걸 Cage는 무공변(불공변)하다라고 한다
+
+    // 제네릭 타입을 가진 클래스들간의 관계를 만들어 주기
 }
 
 class Cage {
