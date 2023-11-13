@@ -27,3 +27,14 @@ fun main3() {
 }
 
 fun consumeFilter(filter: StringFilter) {}
+
+fun add2(a: Int, b: Int) = a + b
+
+fun main4() {
+    val add1 = { a: Int, b: Int,-> a + b }
+
+    val add2 = fun (a: Int, b: Int) = a + b
+
+    // callable reference
+    val add3 = ::add
+}
